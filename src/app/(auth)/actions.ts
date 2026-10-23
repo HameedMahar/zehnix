@@ -20,13 +20,13 @@ export async function login(formData: FormData) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  let role: UserRole = "student";
+    let role: UserRole = "student";
   if (user) {
     const { data: profile } = await supabase
       .from("profiles")
       .select("role")
       .eq("id", user.id)
-      .single();
+      .single<{ role: UserRole }>();
     if (profile) role = profile.role;
   }
 
